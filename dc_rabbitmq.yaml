@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: name=rabbitmq
+objects:
+- apiVersion: v1
+  data:
+    RABBITMQ_DEFAULT_PASS: password
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_ERLANG_COOKIE: nomnomacookienom
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: null
+    name: rabbitmq

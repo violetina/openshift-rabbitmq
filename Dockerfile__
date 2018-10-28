@@ -1,0 +1,28 @@
+FROM viaa/rabbitmq
+ENV LANG C.UTF-8
+
+# set home so that any `--user` knows where to put the erlang cookie
+ENV HOME /var/lib/rabbitmq
+
+RUN mkdir -p /var/lib/rabbitmq /etc/rabbitmq \
+	&& chown -R rabbitmq:rabbitmq /var/lib/rabbitmq /etc/rabbitmq \
+	&& chmod -R 777 /var/lib/rabbitmq /etc/rabbitmq
+VOLUME /var/lib/rabbitmq
+
+# add a symlink to the .erlang.cookie in /root so we can "docker exec rabbitmqctl ..." without gosu
+RUN ln -sf /var/lib/rabbitmq/.erlang.cookie /root/
+RUN ln -sf "/usr/lib/rabbitmq/lib/rabbitmq_server-$RABBITMQ_VERSION/plugins" /plugins
+
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY start.sh /usr/local/bin/
+RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
+RUN ["chmod", "+x", "./docker-entrypoint.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/start.sh"]
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+EXPOSE 4369 5671 5672  15672 25672
+# Start the RabbitMQ broker and keep the container running.
+CMD start.sh
+#sh docker-entrypoint.sh rabbitmq-server & sleep 30 && rabbitmq-plugins enable rabbitmq_management rabbitmq_shovel  
+#["rabbitmq-server"]

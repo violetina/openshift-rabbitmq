@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: name=rabbitmq
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: rabbitmq
+    name: rabbitmq
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: rabbitmq:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: rabbitmq:3.7-management-alpine
+      type: Docker
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: cMtVQ_qI9GHjk5Rqe6iv
+      type: GitHub
+    - generic:
+        secret: oqum2aSzi65ZRcLkNQgH
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
