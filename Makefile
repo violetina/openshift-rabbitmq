@@ -33,6 +33,7 @@ deploy:
 	oc create -f nijntje_pvc.yaml
 	oc create -f nijntje_svc.yaml
 	oc create -f nijntje-deploymentconfig.yaml
+	oc create -f slaafje-deploymentconfig.yaml
 clean:
 	rm -rf /tmp/${GIT_NAME}
 all:	clean checkTools login clone build push deploy clean

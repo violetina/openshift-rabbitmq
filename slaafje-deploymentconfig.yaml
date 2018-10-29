@@ -37,10 +37,7 @@ spec:
         - containerPort: 15672
         - containerPort: 25672
         resources: {}
-        volumeMounts:
-        - mountPath: /var/lib/rabbitmq
-          name: nijntje-claim0
-      hostname: master
+      hostname: slaafje
       restartPolicy: Always
   test: false
   triggers:
