@@ -1,0 +1,8 @@
+    - env:
+      - name: RABBITMQ_DEFAULT_PASS
+        value: ${RABBITMQ_DEFAULT_PASS}
+      - name: RABBITMQ_DEFAULT_USER
+        value: ${RABBITMQ_DEFAULT_USER}
+      - name: RABBITMQ_ERLANG_COOKIE
+        value: ${RABBITMQ_ERLANG_COOKIE}
+
